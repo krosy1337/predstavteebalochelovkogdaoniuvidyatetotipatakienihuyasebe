@@ -24,7 +24,7 @@ const App: React.FC = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:3005/api", formData, {
+      const response = await axios.post("http://localhost:3005/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
