@@ -11,6 +11,9 @@ const { Text } = Typography;
 const App: React.FC = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [value, setValue] = useState<string | null>(null);
+  const [dimension, setDimension] = useState<string | null>(null);
+  const [time, setTime] = useState<string | null>(null);
+  const [type, setType] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [valueLoading, setValueLoading] = useState<boolean>(false);
 
@@ -31,6 +34,9 @@ const App: React.FC = () => {
       });
 
       setValue(response.data.value);
+      setTime(response.data.time);
+      setType(response.data.type);
+      setDimension(response.data.dimension);
     } catch (error: any) {
       setError(error.response?.data?.message || "Ошибка при отправке запроса");
     } finally {
@@ -62,12 +68,23 @@ const App: React.FC = () => {
             <div className="value-container">
               {valueLoading ? (
                 <Spin size="large" />
+              ) : value ? (
+                <>
+                  <Text style={{ color: "white", fontSize: "18px" }}>
+                    Значение: {value}
+                  </Text>
+                  <Text style={{ color: "white", fontSize: "18px" }}>
+                    Размерность: {dimension}
+                  </Text>
+                  <Text style={{ color: "white", fontSize: "18px" }}>
+                    Тип: {type}
+                  </Text>
+                  <Text style={{ color: "white", fontSize: "18px" }}>
+                    Время на обработку: {time?.slice(0, 5)} секунд
+                  </Text>
+                </>
               ) : (
-                <Text style={{ color: "white", fontSize: "18px" }}>
-                  {value
-                    ? `Значение: ${value}`
-                    : "Загрузите изображение для получения значения"}
-                </Text>
+                "Загрузите изображение для получения значения"
               )}
             </div>
           )}
